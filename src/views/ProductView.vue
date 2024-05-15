@@ -1,12 +1,16 @@
 <script>
 import axios from 'axios';
-// import import { useRouter } from "vue-router";
+import DetailsView from './DetailsView.vue';
 
 export default {
+    components: {
+        DetailsView
+    },
     data() {
         return {
             posts: null,
             selectedProduct: null,
+            showModal: false
         }
     },
     async mounted() {
@@ -18,7 +22,6 @@ export default {
                 headers: {
                     Authorization: localStorage.getItem('auth')
                 }
-
             });
             return response.data.data;
         },
@@ -29,6 +32,7 @@ export default {
                 }
             });
             this.selectedProduct = response.data.data;
+            this.showModal = true;
         },
         async deleteProduct(productId) {
             try {
@@ -42,12 +46,16 @@ export default {
             } catch (error) {
                 console.error('Failed to delete the product:', error);
             }
+        },
+        closeModal() {
+            this.showModal = false;
+            this.selectedProduct = null;
         }
     }
 }
 </script>
-<template>
 
+<template>
     <div class="bg-white">
         <nav class="flex justify-between bg-blue-600 p-5 px-36 text-white">
             <h1 class="text-l font-bold">MASPOS</h1>
@@ -61,7 +69,8 @@ export default {
             <div class="flex items-center justify-end gap-3 px-36 pt-10">
                 <button class="rounded bg-blue-200 px-4 py-2 text-sm font-semibold text-blue-800">+ Add
                     Category</button>
-                <button class="rounded bg-blue-200 px-4 py-2 text-sm font-semibold text-blue-800">+ Add
+                <button class="rounded bg-blue-200 px-4 py-2 text-sm font-semibold text-blue-800"
+                    @click="addProduct(post.id)">+ Add
                     Products</button>
                 <button class="rounded bg-blue-700 px-4 py-2 text-sm font-semibold text-blue-100">Cart</button>
             </div>
@@ -78,15 +87,15 @@ export default {
                 <div class="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-5  xl:gap-x-8">
 
                     <div v-for="post in posts" :key="post.id" class="overflow-hidden rounded-lg shadow">
-                        <img :src="post['picture_url']" class="aspect-[200/165] object-cover"
+                        <img :src="post.picture_url" class="aspect-[200/165] object-cover"
                             @click="detailsProduct(post.id)" />
                         <div class="p-3">
                             <div class="flex items-center justify-between">
-                                <div class="text-sm">{{ post['name'] }}</div>
+                                <div class="text-sm">{{ post.name }}</div>
                                 <button @click="deleteProduct(post.id)"
                                     class="rounded bg-red-600 px-2 py-1 text-xs text-white">Delete</button>
                             </div>
-                            <div class="text-sm font-bold">Rp.{{ post['price'] }}</div>
+                            <div class="text-sm font-bold">Rp.{{ post.price }}</div>
                             <div class="mt-5 flex justify-center">
                                 <button class="w-full  rounded bg-blue-500 px-4 py-2 text-sm text-white sm:max-w-32">+
                                     Add to Cart</button>
@@ -101,16 +110,6 @@ export default {
 
             </div>
         </main>
+        <DetailsView v-if="showModal" :product="selectedProduct" @close="closeModal"></DetailsView>
     </div>
-    <!-- Example modal for product details
-    <div v-if="selectedProduct" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white p-5 rounded">
-            <h2 class="text-xl font-bold mb-4">Product Details</h2>
-            <p><strong>Name:</strong> {{ selectedProduct.name }}</p>
-            <p><strong>Price:</strong> Rp.{{ selectedProduct.price }}</p>
-            <p><strong>Description:</strong> {{ selectedProduct.description }}</p>
-            <button @click="selectedProduct = null" class="mt-4 rounded bg-red-600 px-4 py-2 text-white">Close</button>
-        </div>
-    </div> -->
-
 </template>
