@@ -45,7 +45,7 @@ export default {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, index) in cartItems" :key="item.id">
+                    <tr v-for="(item) in cartItems" :key="item.id">
                         <td class="border p-2 flex items-center">
                             <img :src="item.picture_url" class="w-16 h-16 object-cover mr-4" />
                             <div>
