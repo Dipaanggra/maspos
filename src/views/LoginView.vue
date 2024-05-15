@@ -21,7 +21,7 @@ const submit = (() => {
 </script>
 
 <template>
-    <div class="bg-blue-600">
+    <div class="">
         <div class="flex justify-between bg-blue-600 p-7 px-36 text-white">
             <h1 class="text-l font-bold">MASPOS</h1>
             <div class="items-center justify-end">

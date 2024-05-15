@@ -1,16 +1,20 @@
 <script>
 import axios from 'axios';
 import DetailsView from './DetailsView.vue';
+import AddProduct from './AddProduct.vue';
+import { cartStore } from '../stores/cartStore';
 
 export default {
     components: {
-        DetailsView
+        DetailsView,
+        AddProduct
     },
     data() {
         return {
             posts: null,
             selectedProduct: null,
-            showModal: false
+            showModal: false,
+            showAddProductModal: false
         }
     },
     async mounted() {
@@ -41,7 +45,6 @@ export default {
                         Authorization: localStorage.getItem('auth')
                     }
                 });
-                // Remove the deleted product from the posts array
                 this.posts = this.posts.filter(post => post.id !== productId);
             } catch (error) {
                 console.error('Failed to delete the product:', error);
@@ -50,6 +53,23 @@ export default {
         closeModal() {
             this.showModal = false;
             this.selectedProduct = null;
+        },
+        closeAddProductModal() {
+            this.showAddProductModal = false;
+        },
+        async productAdded() {
+            this.posts = await this.fetchProducts();
+        },
+        addToCart(product) {
+            cartStore.addItem(product);
+        }
+    },
+    computed: {
+        cartItems() {
+            return cartStore.items;
+        },
+        totalBill() {
+            return cartStore.totalBill;
         }
     }
 }
@@ -69,10 +89,10 @@ export default {
             <div class="flex items-center justify-end gap-3 px-36 pt-10">
                 <button class="rounded bg-blue-200 px-4 py-2 text-sm font-semibold text-blue-800">+ Add
                     Category</button>
-                <button class="rounded bg-blue-200 px-4 py-2 text-sm font-semibold text-blue-800"
-                    @click="addProduct(post.id)">+ Add
-                    Products</button>
-                <button class="rounded bg-blue-700 px-4 py-2 text-sm font-semibold text-blue-100">Cart</button>
+                <button @click="showAddProductModal = true"
+                    class="rounded bg-blue-200 px-4 py-2 text-sm font-semibold text-blue-800">+ Add Product</button>
+                <button class="rounded bg-blue-700 px-4 py-2 text-sm font-semibold text-blue-100"
+                    @click="$router.push('/checkout')">Cart</button>
             </div>
 
             <div class="my-4 flex px-36">
@@ -84,8 +104,7 @@ export default {
                 <div class="flex-1 border-b-2"></div>
             </div>
             <div class="mx-auto max-w-2xl px-4 py-6 sm:px-6 sm:py-10 lg:max-w-7xl lg:px-8">
-                <div class="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-5  xl:gap-x-8">
-
+                <div class="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-5 xl:gap-x-8">
                     <div v-for="post in posts" :key="post.id" class="overflow-hidden rounded-lg shadow">
                         <img :src="post.picture_url" class="aspect-[200/165] object-cover"
                             @click="detailsProduct(post.id)" />
@@ -97,19 +116,20 @@ export default {
                             </div>
                             <div class="text-sm font-bold">Rp.{{ post.price }}</div>
                             <div class="mt-5 flex justify-center">
-                                <button class="w-full  rounded bg-blue-500 px-4 py-2 text-sm text-white sm:max-w-32">+
-                                    Add to Cart</button>
+                                <button @click="addToCart(post)"
+                                    class="w-full rounded bg-blue-500 px-4 py-2 text-sm text-white sm:max-w-32">+ Add to
+                                    Cart</button>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="flex justify-end mt-10">
-                    <button class="rounded bg-blue-500 px-4 py-3 font-medium text-white">Total Bill : Rp.</button>
+                    <button class="rounded bg-blue-500 px-4 py-3 font-medium text-white">Total Bill : Rp.{{ totalBill
+                        }}</button>
                 </div>
-
             </div>
         </main>
         <DetailsView v-if="showModal" :product="selectedProduct" @close="closeModal"></DetailsView>
+        <AddProduct v-if="showAddProductModal" @close="closeAddProductModal" @productAdded="productAdded"></AddProduct>
     </div>
 </template>
