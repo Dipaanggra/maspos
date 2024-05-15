@@ -74,7 +74,7 @@ export default {
             </table>
         </div>
         <div class="mt-6 flex justify-end gap-4">
-            <button @click="$router.push('/')" class="bg-gray-200 px-4 py-2">Back to Home</button>
+            <button @click="$router.push('/products')" class="bg-gray-200 px-4 py-2">Back to Home</button>
             <button @click="payBill" class="bg-blue-500 text-white px-4 py-2">Pay Bill</button>
         </div>
     </div>
