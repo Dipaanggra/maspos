@@ -25,5 +25,5 @@ export default {
 </script>
 
 <template>
-    <p>apa</p>
+    <div class="mt-4">dipaa</div>
 </template>

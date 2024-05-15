@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+// import import { useRouter } from "vue-router";
 
 export default {
     data() {
@@ -17,6 +18,7 @@ export default {
                 headers: {
                     Authorization: localStorage.getItem('auth')
                 }
+
             });
             return response.data.data;
         },
@@ -93,7 +95,7 @@ export default {
                     </div>
 
                 </div>
-                <div class="flex justify-end">
+                <div class="flex justify-end mt-10">
                     <button class="rounded bg-blue-500 px-4 py-3 font-medium text-white">Total Bill : Rp.</button>
                 </div>
 
