@@ -50,7 +50,7 @@ export default {
             <h2 class="text-2xl font-bold mb-4">Add Product</h2>
             <div class="flex flex-col gap-4">
                 <label
-                    class="flex flex-col items-center justify-center border-2 border-dashed rounded-lg h-48 cursor-pointer bg-blue-50">
+                    class="flex flex-col items-center justify-center border-2 border-dashed rounded-lg h-48 w-64 cursor-pointer bg-blue-50">
                     <input type="file" class="hidden" @change="handleImageUpload" />
                     <span class="text-blue-500">Upload Image</span>
                 </label>

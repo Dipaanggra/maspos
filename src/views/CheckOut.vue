@@ -33,7 +33,6 @@ export default {
 
 <template>
     <div class="bg-white p-10">
-        <h1 class="text-2xl font-bold mb-6">Checkout</h1>
         <div class="overflow-x-auto">
             <table class="min-w-full border-collapse">
                 <thead>
@@ -41,7 +40,6 @@ export default {
                         <th class="border p-2 text-left">Product</th>
                         <th class="border p-2 text-left">Qty</th>
                         <th class="border p-2 text-left">Sub Total</th>
-                        <th class="border p-2"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,11 +50,12 @@ export default {
                                 <div class="font-semibold">{{ item.name }}</div>
                                 <div class="text-gray-500">Rp. {{ item.price.toLocaleString() }}</div>
                             </div>
-                        </td>
-                        <td class="border p-2 flex items-center justify-center">
-                            <button @click="decrementQuantity(item.id)" class="px-2">-</button>
-                            <input type="text" :value="item.quantity" class="w-12 text-center border mx-2" readonly />
-                            <button @click="incrementQuantity(item.id)" class="px-2">+</button>
+                            <div class="flex">
+                                <button @click="decrementQuantity(item.id)" class="px-2">-</button>
+                                <input type="text" :value="item.quantity" class="w-12 text-center border mx-2"
+                                    readonly />
+                                <button @click="incrementQuantity(item.id)" class="px-2">+</button>
+                            </div>
                         </td>
                         <td class="border p-2">Rp. {{ (item.price * item.quantity).toLocaleString() }}</td>
                         <td class="border p-2">
@@ -68,7 +67,6 @@ export default {
                     <tr>
                         <td class="border p-2 text-right font-bold" colspan="2">Total</td>
                         <td class="border p-2 font-bold">Rp. {{ totalBill.toLocaleString() }}</td>
-                        <td class="border p-2"></td>
                     </tr>
                 </tfoot>
             </table>
