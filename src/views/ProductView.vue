@@ -3,18 +3,21 @@ import axios from 'axios';
 import DetailsView from './DetailsView.vue';
 import AddProduct from './AddProduct.vue';
 import { cartStore } from '../stores/cartStore';
+import AddCategory from './AddCategory.vue';
 
 export default {
     components: {
         DetailsView,
-        AddProduct
+        AddProduct,
+        AddCategory
     },
     data() {
         return {
             posts: null,
             selectedProduct: null,
             showModal: false,
-            showAddProductModal: false
+            showAddProductModal: false,
+            showAddCategoryModal: false
         }
     },
     async mounted() {
@@ -60,6 +63,12 @@ export default {
         async productAdded() {
             this.posts = await this.fetchProducts();
         },
+        closeAddCategoryModal() {
+            this.showAddCategoryModal = false;
+        },
+        async categoryAdded() {
+            this.posts = await this.fetchProducts();
+        },
         addToCart(product) {
             cartStore.addItem(product);
         }
@@ -87,7 +96,8 @@ export default {
         </nav>
         <main>
             <div class="flex items-center justify-end gap-3 px-36 pt-10">
-                <button class="rounded bg-blue-200 px-4 py-2 text-sm font-semibold text-blue-800">+ Add
+                <button class="rounded bg-blue-200 px-4 py-2 text-sm font-semibold text-blue-800"
+                    @click="showAddCategoryModal = true">+ Add
                     Category</button>
                 <button @click="showAddProductModal = true"
                     class="rounded bg-blue-200 px-4 py-2 text-sm font-semibold text-blue-800">+ Add Product</button>
@@ -124,12 +134,15 @@ export default {
                     </div>
                 </div>
                 <div class="flex justify-end mt-10">
-                    <button class="rounded bg-blue-500 px-4 py-3 font-medium text-white">Total Bill : Rp.{{ totalBill
+                    <button class="rounded bg-blue-500 px-4 py-3 font-medium text-white"
+                        @click="$router.push('/checkout')">Total Bill : Rp.{{ totalBill
                         }}</button>
                 </div>
             </div>
         </main>
         <DetailsView v-if="showModal" :product="selectedProduct" @close="closeModal"></DetailsView>
         <AddProduct v-if="showAddProductModal" @close="closeAddProductModal" @productAdded="productAdded"></AddProduct>
+        <AddCategory v-if="showAddCategoryModal" @close="closeAddCategoryModal" @categoryAdded="categoryAdded">
+        </AddCategory>
     </div>
 </template>
