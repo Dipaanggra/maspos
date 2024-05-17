@@ -92,7 +92,6 @@ export default {
 }
 </script>
 
-
 <template>
     <div class="bg-white">
         <nav class="flex justify-between bg-blue-600 p-5 px-36 text-white relative">
@@ -126,11 +125,11 @@ export default {
             </div>
 
             <div class="my-4 flex px-36">
-                <button class="border-b-2 border-blue-500 py-1 font-medium text-blue-600">Category 1</button>
+                <button class="border-b-2 border-blue-500 py-1 font-medium text-blue-600">Makanan</button>
                 <div class="w-4 border-b-2"></div>
-                <button class="border-b-2 py-1 font-medium">Category 2</button>
+                <button class="border-b-2 py-1 font-medium">Minuman</button>
                 <div class="w-4 border-b-2"></div>
-                <button class="border-b-2 py-1 font-medium">Category 3</button>
+                <button class="border-b-2 py-1 font-medium">Barang</button>
                 <div class="flex-1 border-b-2"></div>
             </div>
             <div class="mx-auto max-w-2xl px-4 py-6 sm:px-6 sm:py-10 lg:max-w-7xl lg:px-8">

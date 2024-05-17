@@ -1,4 +1,4 @@
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
 
 const CART_STORAGE_KEY = 'cart_items';
 
@@ -13,8 +13,9 @@ function saveCartToStorage(items) {
 
 export const cartStore = reactive({
   items: loadCartFromStorage(),
+  
   addItem(product) {
-    const item = this.items.find((item) => item.id === product.id);
+    const item = this.items.find(item => item.id === product.id);
     if (item) {
       item.quantity++;
     } else {
@@ -22,29 +23,34 @@ export const cartStore = reactive({
     }
     saveCartToStorage(this.items);
   },
+  
   removeItem(productId) {
-    this.items = this.items.filter((item) => item.id !== productId);
+    this.items = this.items.filter(item => item.id !== productId);
     saveCartToStorage(this.items);
   },
+  
   incrementQuantity(productId) {
-    const item = this.items.find((item) => item.id === productId);
+    const item = this.items.find(item => item.id === productId);
     if (item) {
       item.quantity++;
     }
     saveCartToStorage(this.items);
   },
+  
   decrementQuantity(productId) {
-    const item = this.items.find((item) => item.id === productId);
+    const item = this.items.find(item => item.id === productId);
     if (item && item.quantity > 1) {
       item.quantity--;
     }
     saveCartToStorage(this.items);
   },
+  
   clearCart() {
     this.items = [];
     saveCartToStorage(this.items);
   },
-  get totalBill() {
-    return this.items.reduce((total, item) => total + item.price * item.quantity, 0);
-  }
+  
+  totalBill: computed(() => {
+    return cartStore.items.reduce((total, item) => total + item.price * item.quantity, 0);
+  })
 });

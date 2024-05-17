@@ -1,76 +1,55 @@
-<script>
+<script setup>
 import { ref, onMounted } from 'vue';
 import { cartStore } from '../stores/cartStore';
+import { useRouter } from 'vue-router';
 
-export default {
-    setup() {
-        const paymentSuccessful = ref(false);
-        const showPopup = ref(false);
-        const showDropdown = ref(false); // State for dropdown visibility
-        const cartItems = ref(cartStore.items); // Reactive reference to cart items
+const paymentSuccessful = ref(false);
+const showPopup = ref(false);
+const showDropdown = ref(false);
 
-        const removeItem = (productId) => {
-            cartStore.removeItem(productId);
-            cartItems.value = cartStore.items; // Update the reactive reference
-        };
-
-        const incrementQuantity = (productId) => {
-            cartStore.incrementQuantity(productId);
-            cartItems.value = cartStore.items; // Update the reactive reference
-        };
-
-        const decrementQuantity = (productId) => {
-            cartStore.decrementQuantity(productId);
-            cartItems.value = cartStore.items; // Update the reactive reference
-        };
-
-        const payBill = () => {
-            paymentSuccessful.value = true;
-            showPopup.value = true;
-            cartStore.clearCart();
-            cartItems.value = cartStore.items; // Clear the cart items
-        };
-
-        const closePopup = () => {
-            showPopup.value = false;
-            paymentSuccessful.value = false;
-        };
-
-        const toggleDropdown = () => {
-            showDropdown.value = !showDropdown.value;
-        };
-
-        const logout = () => {
-            // Handle the logout process
-            localStorage.removeItem('user'); // Assuming user info is stored in local storage
-            // Redirect to login page
-            window.location.href = '/login'; // Adjust the path to your login page
-        };
-
-        onMounted(() => {
-            cartItems.value = cartStore.items; // Initialize the cart items
-        });
-
-        return {
-            cartItems,
-            totalBill: cartStore.totalBill,
-            paymentSuccessful,
-            showPopup,
-            showDropdown,
-            removeItem,
-            incrementQuantity,
-            decrementQuantity,
-            payBill,
-            closePopup,
-            toggleDropdown,
-            logout
-        };
-    }
+const removeItem = (productId) => {
+    cartStore.removeItem(productId);
 };
+
+const incrementQuantity = (productId) => {
+    cartStore.incrementQuantity(productId);
+};
+
+const decrementQuantity = (productId) => {
+    cartStore.decrementQuantity(productId);
+};
+
+const payBill = () => {
+    paymentSuccessful.value = true;
+    showPopup.value = true;
+    cartStore.clearCart();
+};
+
+const closePopup = () => {
+    showPopup.value = false;
+    paymentSuccessful.value = false;
+};
+
+const toggleDropdown = () => {
+    showDropdown.value = !showDropdown.value;
+};
+
+const logout = () => {
+    localStorage.removeItem('auth');
+    window.location.href = '/login';
+};
+
+const router = useRouter();
+const backToHome = () => {
+    router.push('/products');
+};
+
+onMounted(() => {
+    // Any necessary initialization
+});
 </script>
 
 <template>
-    <!-- Halaman Checkout -->
     <div class="flex min-h-screen flex-col">
         <nav class="flex justify-between bg-blue-600 p-5 px-36 text-white relative">
             <h1 class="text-l font-bold">MASPOS</h1>
@@ -80,7 +59,6 @@ export default {
                     <img src="https://source.unsplash.com/random/?person" class="size-8 rounded-full object-cover"
                         alt="Profile" />
                 </div>
-                <!-- Dropdown Menu -->
                 <div v-if="showDropdown" class="absolute right-0 mt-12 w-48 bg-white rounded-md shadow-lg z-10">
                     <button @click="logout"
                         class="block w-full text-left px-4 py-2 rounded-md text-sm text-blue-500 font-medium hover:bg-gray-50">
@@ -97,11 +75,11 @@ export default {
                             <th class="p-2 text-left">Product</th>
                             <th class="p-2 text-left">Qty</th>
                             <th class="p-2 text-left">Sub Total</th>
-                            <th class="p-2 text-lefts"></th>
+                            <th class="p-2 text-left"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in cartItems" :key="item.id">
+                        <tr v-for="item in cartStore.items" :key="item.id">
                             <td class="flex items-center p-2">
                                 <img :src="item.picture_url" class="mr-4 h-28 w-28 rounded-lg object-cover" />
                                 <div>
@@ -134,39 +112,31 @@ export default {
                             <td class="p-2 font-bold">Rp. {{ (item.price * item.quantity).toLocaleString() }}</td>
                             <td class="p-2 justify-evenly flex">
                                 <button @click="removeItem(item.id)"
-                                    class="rounded-sm bg-red-600 px-2 py-1 font-normal text-white">
-                                    Remove Item
-                                </button>
+                                    class="rounded-sm bg-red-600 px-2 py-1 font-normal text-white">Remove Item</button>
                             </td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr class="justify-between flex">
                             <td class="p-2 text-right font-bold" colspan="2">Total</td>
-                            <td class="p-2 font-bold">Rp. {{ totalBill.toLocaleString() }}</td>
+                            <td class="p-2 font-bold">Rp. {{ cartStore.totalBill.toLocaleString() }}</td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
             <div class="mt-6 flex justify-end gap-4">
-                <button @click="$router.push('/products')"
-                    class="rounded border-2 border-blue-500 px-4 py-2 font-semibold text-blue-600">
-                    Back to Home
-                </button>
-                <button @click="payBill" class="rounded bg-blue-500 px-4 py-2 font-semibold text-white">
-                    Pay Bill
-                </button>
+                <button @click="backToHome"
+                    class="rounded border-2 border-blue-500 px-4 py-2 font-semibold text-blue-600">Back to Home</button>
+                <button @click="payBill" class="rounded bg-blue-500 px-4 py-2 font-semibold text-white">Pay
+                    Bill</button>
             </div>
         </div>
-
-        <!-- Popup Checkout -->
         <div v-if="showPopup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div class="bg-white p-8 rounded-lg shadow-lg text-center">
                 <div class="text-2xl font-bold">Payment Successful</div>
-                <div class="my-4 text-xl">Rp. {{ totalBill.toLocaleString() }}</div>
+                <div class="my-4 text-xl">Rp. {{ cartStore.totalBill.toLocaleString() }}</div>
                 <div>
-                    <button @click="$router.push('/products')"
-                        class="mt-4 rounded bg-blue-500 px-4 py-2 font-semibold text-white">Back
+                    <button @click="backToHome" class="mt-4 rounded bg-blue-500 px-4 py-2 font-semibold text-white">Back
                         to Home</button>
                 </div>
             </div>
