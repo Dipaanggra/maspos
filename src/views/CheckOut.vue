@@ -6,23 +6,29 @@ export default {
     setup() {
         const paymentSuccessful = ref(false);
         const showPopup = ref(false);
+        const showDropdown = ref(false); // State for dropdown visibility
+        const cartItems = ref(cartStore.items); // Reactive reference to cart items
 
         const removeItem = (productId) => {
             cartStore.removeItem(productId);
+            cartItems.value = cartStore.items; // Update the reactive reference
         };
 
         const incrementQuantity = (productId) => {
             cartStore.incrementQuantity(productId);
+            cartItems.value = cartStore.items; // Update the reactive reference
         };
 
         const decrementQuantity = (productId) => {
             cartStore.decrementQuantity(productId);
+            cartItems.value = cartStore.items; // Update the reactive reference
         };
 
         const payBill = () => {
             paymentSuccessful.value = true;
             showPopup.value = true;
             cartStore.clearCart();
+            cartItems.value = cartStore.items; // Clear the cart items
         };
 
         const closePopup = () => {
@@ -30,20 +36,34 @@ export default {
             paymentSuccessful.value = false;
         };
 
+        const toggleDropdown = () => {
+            showDropdown.value = !showDropdown.value;
+        };
+
+        const logout = () => {
+            // Handle the logout process
+            localStorage.removeItem('user'); // Assuming user info is stored in local storage
+            // Redirect to login page
+            window.location.href = '/login'; // Adjust the path to your login page
+        };
+
         onMounted(() => {
-            cartStore.items = cartStore.items;
+            cartItems.value = cartStore.items; // Initialize the cart items
         });
 
         return {
-            cartItems: cartStore.items,
+            cartItems,
             totalBill: cartStore.totalBill,
             paymentSuccessful,
             showPopup,
+            showDropdown,
             removeItem,
             incrementQuantity,
             decrementQuantity,
             payBill,
-            closePopup
+            closePopup,
+            toggleDropdown,
+            logout
         };
     }
 };
@@ -52,12 +72,21 @@ export default {
 <template>
     <!-- Halaman Checkout -->
     <div class="flex min-h-screen flex-col">
-        <nav class="flex justify-between bg-blue-600 p-5 px-36 text-white">
+        <nav class="flex justify-between bg-blue-600 p-5 px-36 text-white relative">
             <h1 class="text-l font-bold">MASPOS</h1>
-            <div class="flex items-center justify-end gap-2">
-                <div>Taufik00</div>
-                <img src="https://source.unsplash.com/random/?person" class="size-8 rounded-full object-cover"
-                    alt="Profile" />
+            <div class="flex items-center justify-end gap-2 relative">
+                <div @click="toggleDropdown" class="cursor-pointer flex items-center gap-2">
+                    <div>Taufik00</div>
+                    <img src="https://source.unsplash.com/random/?person" class="size-8 rounded-full object-cover"
+                        alt="Profile" />
+                </div>
+                <!-- Dropdown Menu -->
+                <div v-if="showDropdown" class="absolute right-0 mt-12 w-48 bg-white rounded-md shadow-lg z-10">
+                    <button @click="logout"
+                        class="block w-full text-left px-4 py-2 rounded-md text-sm text-blue-500 font-medium hover:bg-gray-50">
+                        Logout
+                    </button>
+                </div>
             </div>
         </nav>
         <div class="bg-white p-10 px-36">
@@ -91,7 +120,7 @@ export default {
                                         </svg>
                                     </button>
                                     <input class="mx-2 w-12 text-center font-bold border-blue-500 rounded-lg"
-                                        :value="item.quantity" type="text" />
+                                        :value="item.quantity" type="text" readonly />
                                     <button @click="incrementQuantity(item.id)"
                                         class="rounded-full bg-blue-500 px-3 py-1 font-medium text-white hover:bg-blue-600">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-3" fill="none"
@@ -130,7 +159,7 @@ export default {
             </div>
         </div>
 
-        <!-- Popup Checkout-->
+        <!-- Popup Checkout -->
         <div v-if="showPopup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div class="bg-white p-8 rounded-lg shadow-lg text-center">
                 <div class="text-2xl font-bold">Payment Successful</div>

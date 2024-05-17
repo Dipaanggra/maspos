@@ -17,7 +17,8 @@ export default {
             selectedProduct: null,
             showModal: false,
             showAddProductModal: false,
-            showAddCategoryModal: false
+            showAddCategoryModal: false,
+            showDropdown: false
         }
     },
     async mounted() {
@@ -71,6 +72,13 @@ export default {
         },
         addToCart(product) {
             cartStore.addItem(product);
+        },
+        toggleDropdown() {
+            this.showDropdown = !this.showDropdown;
+        },
+        logout() {
+            localStorage.removeItem('auth');
+            this.$router.push('/login');
         }
     },
     computed: {
@@ -84,24 +92,36 @@ export default {
 }
 </script>
 
+
 <template>
     <div class="bg-white">
-        <nav class="flex justify-between bg-blue-600 p-5 px-36 text-white">
+        <nav class="flex justify-between bg-blue-600 p-5 px-36 text-white relative">
             <h1 class="text-l font-bold">MASPOS</h1>
-            <div class="flex items-center justify-end gap-2">
-                <div class="">John doe</div>
-                <img src="https://source.unsplash.com/random/?person" class="size-8 rounded-full object-cover"
-                    alt="Profile" />
+            <div class="flex items-center justify-end gap-2 relative">
+                <div class="relative" @click="toggleDropdown">
+                    <div class="cursor-pointer flex items-center">
+                        <div>Taufik00</div>
+                        <img src="https://source.unsplash.com/random/?person"
+                            class="size-8 rounded-full object-cover ml-2" alt="Profile" />
+                    </div>
+                    <div v-if="showDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                        <button @click="logout"
+                            class="block w-full text-left px-4 py-2 rounded-md text-sm text-blue-500 font-medium hover:bg-gray-50">
+                            Logout
+                        </button>
+                    </div>
+                </div>
             </div>
         </nav>
         <main>
             <div class="flex items-center justify-end gap-3 px-36 pt-10">
-                <button class="rounded bg-blue-200 px-4 py-2 text-sm font-semibold text-blue-800"
+                <button class="rounded bg-blue-200 px-4 py-2 text-sm font-semibold hover:bg-blue-300 text-blue-800"
                     @click="showAddCategoryModal = true">+ Add
                     Category</button>
                 <button @click="showAddProductModal = true"
-                    class="rounded bg-blue-200 px-4 py-2 text-sm font-semibold text-blue-800">+ Add Product</button>
-                <button class="rounded bg-blue-700 px-4 py-2 text-sm font-semibold text-blue-100"
+                    class="rounded bg-blue-200 px-4 py-2 text-sm font-semibold hover:bg-blue-300 text-blue-800">+ Add
+                    Product</button>
+                <button class="rounded bg-blue-500 hover:bg-blue-600 px-4 py-2 text-sm font-semibold text-blue-100"
                     @click="$router.push('/checkout')">Cart</button>
             </div>
 
@@ -120,23 +140,23 @@ export default {
                             @click="detailsProduct(post.id)" />
                         <div class="p-3">
                             <div class="flex items-center justify-between">
-                                <div class="text-sm">{{ post.name }}</div>
+                                <div class="text-sm font-medium">{{ post.name }}</div>
                                 <button @click="deleteProduct(post.id)"
                                     class="rounded bg-red-600 px-2 py-1 text-xs text-white">Delete</button>
                             </div>
-                            <div class="text-sm font-bold">Rp.{{ post.price }}</div>
+                            <div class="text-sm font-bold">Rp.{{ post.price.toLocaleString() }}</div>
                             <div class="mt-5 flex justify-center">
                                 <button @click="addToCart(post)"
-                                    class="w-full rounded bg-blue-500 px-4 py-2 text-sm text-white sm:max-w-32">+ Add to
+                                    class="w-full rounded bg-blue-500 hover:bg-blue-600 px-4 py-2 text-sm text-white sm:max-w-32">+
+                                    Add to
                                     Cart</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="flex justify-end mt-10">
-                    <button class="rounded bg-blue-500 px-4 py-3 font-medium text-white"
-                        @click="$router.push('/checkout')">Total Bill : Rp.{{ totalBill
-                        }}</button>
+                    <button class="rounded bg-blue-500 hover:bg-blue-600 px-4 py-2 font-medium text-white"
+                        @click="$router.push('/checkout')">Total Bill : Rp.{{ totalBill.toLocaleString() }}</button>
                 </div>
             </div>
         </main>
