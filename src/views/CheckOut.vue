@@ -1,42 +1,61 @@
 <script>
-import { cartStore } from '../stores/cartStore'
+import { ref, onMounted } from 'vue';
+import { cartStore } from '../stores/cartStore';
 
 export default {
-    data() {
-        return {}
-    },
-    methods: {
-        removeItem(productId) {
-            cartStore.removeItem(productId)
-        },
-        incrementQuantity(productId) {
-            cartStore.incrementQuantity(productId)
-        },
-        decrementQuantity(productId) {
-            cartStore.decrementQuantity(productId)
-        },
-        payBill() {
-            // Handle the payment process
-            alert('Payment Successful!')
-        }
-    },
-    computed: {
-        cartItems() {
-            return cartStore.items
-        },
-        totalBill() {
-            return cartStore.totalBill
-        }
+    setup() {
+        const paymentSuccessful = ref(false);
+        const showPopup = ref(false);
+
+        const removeItem = (productId) => {
+            cartStore.removeItem(productId);
+        };
+
+        const incrementQuantity = (productId) => {
+            cartStore.incrementQuantity(productId);
+        };
+
+        const decrementQuantity = (productId) => {
+            cartStore.decrementQuantity(productId);
+        };
+
+        const payBill = () => {
+            paymentSuccessful.value = true;
+            showPopup.value = true;
+            cartStore.clearCart();
+        };
+
+        const closePopup = () => {
+            showPopup.value = false;
+            paymentSuccessful.value = false;
+        };
+
+        onMounted(() => {
+            cartStore.items = cartStore.items;
+        });
+
+        return {
+            cartItems: cartStore.items,
+            totalBill: cartStore.totalBill,
+            paymentSuccessful,
+            showPopup,
+            removeItem,
+            incrementQuantity,
+            decrementQuantity,
+            payBill,
+            closePopup
+        };
     }
-}
+};
 </script>
 
 <template>
+    <!-- Halaman Checkout -->
     <div class="flex min-h-screen flex-col">
         <nav class="flex justify-between bg-blue-600 p-5 px-36 text-white">
             <h1 class="text-l font-bold">MASPOS</h1>
             <div class="flex items-center justify-end gap-2">
-                <div class="">John doe</div>
+                <div>Taufik00</div>
                 <img src="https://source.unsplash.com/random/?person" class="size-8 rounded-full object-cover"
                     alt="Profile" />
             </div>
@@ -108,6 +127,19 @@ export default {
                 <button @click="payBill" class="rounded bg-blue-500 px-4 py-2 font-semibold text-white">
                     Pay Bill
                 </button>
+            </div>
+        </div>
+
+        <!-- Popup Checkout-->
+        <div v-if="showPopup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                <div class="text-2xl font-bold">Payment Successful</div>
+                <div class="my-4 text-xl">Rp. {{ totalBill.toLocaleString() }}</div>
+                <div>
+                    <button @click="$router.push('/products')"
+                        class="mt-4 rounded bg-blue-500 px-4 py-2 font-semibold text-white">Back
+                        to Home</button>
+                </div>
             </div>
         </div>
     </div>
