@@ -117,9 +117,7 @@ export default {
                 <button class="rounded bg-blue-200 px-4 py-2 text-sm font-semibold hover:bg-blue-300 text-blue-800"
                     @click="showAddCategoryModal = true">+ Add
                     Category</button>
-                <button @click="showAddProductModal = true"
-                    class="rounded bg-blue-200 px-4 py-2 text-sm font-semibold hover:bg-blue-300 text-blue-800">+ Add
-                    Product</button>
+                <AddProduct @productAdded="productAdded" />
                 <button class="rounded bg-blue-500 hover:bg-blue-600 px-4 py-2 text-sm font-semibold text-blue-100"
                     @click="$router.push('/checkout')">Cart</button>
             </div>
@@ -133,7 +131,7 @@ export default {
                 <div class="flex-1 border-b-2"></div>
             </div>
             <div class="mx-auto max-w-2xl px-4 py-6 sm:px-6 sm:py-10 lg:max-w-7xl lg:px-8">
-                <div class="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-5 xl:gap-x-8">
+                <div class="grid grid-cols-2 gap-x-6 gap-y-10  md:grid-cols-3 lg:grid-cols-5 xl:gap-x-8">
                     <div v-for="post in posts" :key="post.id" class="overflow-hidden rounded-lg shadow">
                         <img :src="post.picture_url" class="aspect-[200/165] object-cover"
                             @click="detailsProduct(post.id)" />
@@ -160,7 +158,6 @@ export default {
             </div>
         </main>
         <DetailsView v-if="showModal" :product="selectedProduct" @close="closeModal"></DetailsView>
-        <AddProduct v-if="showAddProductModal" @close="closeAddProductModal" @productAdded="productAdded"></AddProduct>
         <AddCategory v-if="showAddCategoryModal" @close="closeAddCategoryModal" @categoryAdded="categoryAdded">
         </AddCategory>
     </div>

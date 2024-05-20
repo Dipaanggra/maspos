@@ -25,7 +25,7 @@ export default {
                 <span
                     class="inline-block bg-blue-500 text-white rounded-full px-3 py-1 text-sm font-semibold">Makanan</span>
             </div>
-            <p class="text-gray-700 font-semibold text-l mb-2">Rp.{{ product.price }}</p>
+            <p class="text-gray-700 font-semibold text-l mb-2">Rp.{{ product.price.toLocaleString() }}</p>
         </div>
     </div>
 </template>

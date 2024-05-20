@@ -14,7 +14,9 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.22",
     "axios": "^1.6.8",
+    "lucide-vue": "^0.378.0",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"

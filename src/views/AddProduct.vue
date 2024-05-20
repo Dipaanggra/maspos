@@ -1,21 +1,56 @@
 <script>
+// import { ref } from 'vue'
+import {
+    Dialog,
+    DialogPanel,
+    DialogTitle,
+} from '@headlessui/vue'
+
+// const isOpen = ref(false)
+
+// function setIsOpen(value) {
+//     isOpen.value = value
+// }
+</script>
+<script>
 import axios from 'axios';
 
 export default {
+    components: {
+        DialogPanel,
+        DialogTitle,
+    },
     data() {
         return {
+            isOpen: false,
             productName: '',
             price: '',
             category: '',
-            image: null
+            image: null,
+            categories: null,
+            url: ''
         }
     },
+    async mounted() {
+        this.categories = await this.fetchCategories()
+    },
     methods: {
+        setIsOpen(value) {
+            this.isOpen = value
+        },
+        async fetchCategories() {
+            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/category`, {
+                headers: {
+                    Authorization: localStorage.getItem('auth')
+                }
+            });
+            return response.data.data;
+        },
         async addProduct() {
             const formData = new FormData();
             formData.append('name', this.productName);
             formData.append('price', this.price);
-            formData.append('category', this.category);
+            formData.append('category_id', this.category);
             formData.append('image', this.image);
 
             try {
@@ -25,57 +60,88 @@ export default {
                         'Content-Type': 'multipart/form-data'
                     }
                 });
-                this.$emit('productAdded');
-                this.$emit('close');
+                this.setIsOpen(false)
+                this.productName = ''
+                this.price = ''
+                this.category = ''
+                this.image = null
+                this.url = null
+                this.$emit('productAdded')
             } catch (error) {
                 console.error('Failed to add product:', error);
+                this.setIsOpen(false)
             }
+
         },
         handleImageUpload(event) {
             this.image = event.target.files[0];
+            this.url = URL.createObjectURL(this.image);
         }
     }
 }
 </script>
 
+<style></style>
 <template>
-    <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white rounded-lg shadow-lg p-6 w-3/4 md:w-1/2 lg:w-1/3 relative">
-            <button class="text-gray-500 hover:text-gray-900 absolute top-4 right-4" @click="$emit('close')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-            <h2 class="text-2xl font-bold mb-4">Add Product</h2>
-            <div class="flex flex-col gap-3 justify-between">
-                <label
-                    class="flex flex-col items-center justify-center border-2 border-dashed rounded-lg h-36 w-40 cursor-pointer bg-blue-50">
-                    <input type="file" class="hidden" @change="handleImageUpload" />
-                    <span class="text-blue-500">Upload Image</span>
-                </label>
-                <div class="absolute right-0 z-10 w-60 mb-6 rounded-md mr-3">
-                    <lable class="mt-5 px-2 text-sm">Product Name</lable>
-                    <input type="text" v-model="productName" placeholder="Product Name"
-                        class="border rounded px-4 py-2 border-blue-500" />
-                    <label class="px-2 text-sm">Price</label>
-                    <input type="text" v-model="price" placeholder="Input price"
-                        class="border rounded px-4 py-2 border-blue-500" />
-                    <!-- <label class="px-2 text-sm">Category</label>
-                    <select v-model="category" class="border rounded px-4 py-2 border-blue-500">
-                        <option value="" disabled>Select category</option>
-                        <option value="Makanan">Makanan</option>
-                        <option value="Minuman">Minuman</option>
-                        <option value="Lainnya">Lainnya</option>
-                    </select> -->
-                </div>
-                <div class="flex justify-end gap-4 mt-4">
-                    <button @click="$emit('close')"
-                        class="rounded border-2 border-blue-500 hover:border-blue-600 px-4 py-2 text-blue-500 hover:text-blue-600">Cancel</button>
-                    <button @click="addProduct"
-                        class="rounded bg-blue-500 hover:bg-blue-600 px-4 py-2 text-white">Confirm</button>
-                </div>
-            </div>
+    <button @click="setIsOpen(true)"
+        class="rounded bg-blue-200 px-4 py-2 text-sm font-semibold hover:bg-blue-300 text-blue-800">+ Add
+        Product</button>
+    <Dialog :open="isOpen" @close="setIsOpen" class="relative z-50">
+        <!-- The backdrop, rendered as a fixed sibling to the panel container -->
+        <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
+
+        <!-- Full-screen container to center the panel -->
+        <div class="fixed inset-0 flex w-screen items-center justify-center p-4">
+            <!-- The actual dialog panel -->
+            <DialogPanel class="w-full max-w-xl rounded bg-white">
+                <DialogTitle class="flex justify-between p-4 border-b">
+                    <div class="text-xl font-bold">Complete your order</div>
+                    <button @click="setIsOpen(false)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-x">
+                            <path d="M18 6 6 18" />
+                            <path d="m6 6 12 12" />
+                        </svg>
+                    </button>
+                </DialogTitle>
+                <form v-on:submit.prevent="addProduct">
+                    <div class="grid md:grid-cols-2 gap-3 p-4">
+                        <div class="">
+                            <label :style="{ 'background-image': `url(${url})` }" :class="!url ? ' border-2' : ''"
+                                class="flex flex-col items-center justify-center bg-contain bg-no-repeat bg-center border-dashed rounded-lg w-full aspect-square cursor-pointer bg-blue-50">
+                                <input type="file" class="hidden" @change="handleImageUpload" />
+                                <div class="" v-if="!url">
+                                    <span class="text-blue-500">Upload Image</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="">
+                            <div class="">
+                                <label for="name">Name</label>
+                                <input v-model="productName" type="text" class="w-full">
+                            </div>
+                            <div class="">
+                                <label for="name">Price</label>
+                                <input v-model="price" type="number" class="w-full">
+                            </div>
+                            <div class="">
+                                <label for="name">Category</label>
+                                <select v-model="category" name="" class="block w-full" id="">
+                                    <option :value="category.id" v-for="category in categories" :key="category.id">
+                                        {{ category.name }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-2 justify-end p-4">
+                        <button class="px-4 py-2 rounded bg-blue-300">Cancel</button>
+                        <input type="submit" class="px-4 py-2 rounded bg-blue-300" value="Submit">
+                    </div>
+                </form>
+
+                <!-- ... -->
+            </DialogPanel>
         </div>
-    </div>
+    </Dialog>
 </template>
