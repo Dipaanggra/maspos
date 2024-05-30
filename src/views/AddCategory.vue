@@ -1,60 +1,96 @@
+<script setup>
+import { Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
+</script>
 <script>
-import axios from 'axios';
+import axios from 'axios'
 
 export default {
-    data() {
-        return {
-            category: '',
-        }
-    },
-    methods: {
-        async addCategory() {
-            const formData = new FormData();
-            formData.append('category', this.category);
-
-            try {
-                await axios.post(`${import.meta.env.VITE_BASE_URL}/product`, formData, {
-                    headers: {
-                        Authorization: localStorage.getItem('auth'),
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-                this.$emit('categoryAdded');
-                this.$emit('close');
-            } catch (error) {
-                console.error('Failed to add category:', error);
-            }
-        },
-        handleImageUpload(event) {
-            this.image = event.target.files[0];
-        }
+  components: {
+    DialogPanel,
+    DialogTitle
+  },
+  data() {
+    return {
+      isOpen: false,
+      categoryName: ''
     }
+  },
+  methods: {
+    setIsOpen(value) {
+      this.isOpen = value
+    },
+    async addCategory() {
+      const formData = new FormData()
+      formData.append('name', this.categoryName)
+
+      try {
+        await axios.post(`${import.meta.env.VITE_BASE_URL}/category`, formData, {
+          headers: {
+            Authorization: localStorage.getItem('auth')
+          }
+        })
+        this.setIsOpen(false)
+        this.categoryName = ''
+        this.$emit('categoryAdded')
+      } catch (error) {
+        console.error('Failed to add category:', error)
+        this.setIsOpen(false)
+      }
+    }
+  }
 }
 </script>
-
+<style></style>
 <template>
-    <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white rounded-lg shadow-lg p-6 w-3/4 md:w-1/2 lg:w-1/3 relative">
-            <button class="text-gray-500 hover:text-gray-900 absolute top-4 right-4" @click="$emit('close')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-            <h2 class="text-2xl font-bold mb-4">Add Category</h2>
-            <div class="flex flex-col gap-3 items-center">
-                <lable class="mt-5 text-sm">Category Name</lable>
-                <div class="items-center flex mb-6 rounded-md">
-                    <input type="text" v-model="CategoryName" placeholder="Category Name"
-                        class="border rounded px-4  py-2 border-blue-500" />
-                </div>
-                <div class="flex justify-end gap-4 mt-4">
-                    <button @click="$emit('close')"
-                        class="rounded border-2 border-blue-500 hover:border-blue-600 px-4 py-2 text-blue-500 hover:text-blue-600">Cancel</button>
-                    <button @click="addCategory"
-                        class="rounded bg-blue-500 hover:bg-blue-600 px-4 py-2 text-white">Confirm</button>
-                </div>
+  <button
+    @click="setIsOpen(true)"
+    class="px-4 py-2 text-sm font-semibold text-blue-800 bg-blue-200 rounded hover:bg-blue-300"
+  >
+    + Add Category
+  </button>
+  <Dialog :open="isOpen" @close="setIsOpen" class="relative z-50">
+    <!-- The backdrop, rendered as a fixed sibling to the panel container -->
+    <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
+
+    <!-- Full-screen container to center the panel -->
+    <div class="fixed inset-0 flex items-center justify-center w-screen p-4">
+      <!-- The actual dialog panel -->
+      <DialogPanel class="w-full max-w-xl bg-white rounded">
+        <DialogTitle class="flex justify-between p-4 border-b">
+          <div class="text-xl font-bold">Add Category</div>
+          <button @click="setIsOpen(false)">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-x"
+            >
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
+        </DialogTitle>
+        <form v-on:submit.prevent="addCategory">
+          <div class="grid gap-3 p-4 md:grid-cols-2">
+            <div class="">
+              <label for="name">Name</label>
+              <input v-model="categoryName" type="text" class="w-full" />
             </div>
-        </div>
+          </div>
+          <div class="flex justify-end gap-2 p-4">
+            <button class="px-4 py-2 bg-blue-300 rounded">Cancel</button>
+            <button type="submit" class="px-4 py-2 bg-blue-300 rounded">Submit</button>
+          </div>
+        </form>
+
+        <!-- ... -->
+      </DialogPanel>
     </div>
+  </Dialog>
 </template>
