@@ -11,8 +11,7 @@ import {
 // function setIsOpen(value) {
 //     isOpen.value = value
 // }
-</script>
-<script>
+
 import axios from 'axios';
 
 export default {
@@ -80,8 +79,6 @@ export default {
     }
 }
 </script>
-
-<style></style>
 <template>
     <button @click="setIsOpen(true)"
         class="rounded bg-blue-200 px-4 py-2 text-sm font-semibold hover:bg-blue-300 text-blue-800">+ Add
