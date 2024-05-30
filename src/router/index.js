@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from '@/views/LoginView.vue';
 import ProductView from '@/views/ProductView.vue';
 import CheckOut from '@/views/CheckOut.vue';
+import CategoryView from '@/views/CategoryView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,7 +23,13 @@ const router = createRouter({
       name: 'checkout',
       component: CheckOut,
       meta: { requiresAuth: true }
-    }
+    },
+    {
+      path: '/category',
+      name: 'category',
+      component: CategoryView,
+      meta: {requiresAuth: true}
+    },
   ]
 });
 
