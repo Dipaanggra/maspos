@@ -1,15 +1,21 @@
 <script>
-import axios from 'axios'
+import axios from 'axios';
+import EditCategory from './EditCategory.vue';
 
 export default {
+    components: {
+        EditCategory
+    },
     data() {
         return {
             categories: [],
-            showDropdown: false
+            showDropdown: false,
+            showEditModal: false,
+            categoryToEdit: null
         }
     },
     async mounted() {
-        this.categories = await this.fetchCategories()
+        this.categories = await this.fetchCategories();
     },
     methods: {
         async fetchCategories() {
@@ -18,11 +24,11 @@ export default {
                     headers: {
                         Authorization: localStorage.getItem('auth')
                     }
-                })
-                return response.data.data
+                });
+                return response.data.data;
             } catch (error) {
-                console.error('Failed to fetch categories:', error)
-                return []
+                console.error('Failed to fetch categories:', error);
+                return [];
             }
         },
         async deleteCategory(categoryId) {
@@ -31,22 +37,29 @@ export default {
                     headers: {
                         Authorization: localStorage.getItem('auth')
                     }
-                })
-                this.categories = this.categories.filter(category => category.id !== categoryId)
+                });
+                this.categories = this.categories.filter(category => category.id !== categoryId);
             } catch (error) {
-                console.error('Failed to delete the category:', error)
+                console.error('Failed to delete the category:', error);
             }
         },
-        editCategory(categoryId) {
-            // Implement the logic for editing a category.
-            // For example, you could open a modal with a form to edit the category.
+        editCategory(category) {
+            this.categoryToEdit = { ...category };
+            this.showEditModal = true;
         },
         toggleDropdown() {
-            this.showDropdown = !this.showDropdown
+            this.showDropdown = !this.showDropdown;
         },
         logout() {
-            localStorage.removeItem('auth')
-            this.$router.push('/login')
+            localStorage.removeItem('auth');
+            this.$router.push('/login');
+        },
+        updateCategory(updatedCategory) {
+            const index = this.categories.findIndex(category => category.id === updatedCategory.id);
+            if (index !== -1) {
+                this.categories.splice(index, 1, updatedCategory);
+            }
+            this.showEditModal = false;
         }
     }
 }
@@ -81,18 +94,18 @@ export default {
                     </thead>
                     <tbody>
                         <tr v-for="category in categories" :key="category.id">
-                            <td class="flex items-center p-2">
+                            <td class="flex items-center p-3">
                                 <div>
                                     <div class="font-semibold">{{ category.name }}</div>
                                 </div>
                             </td>
                             <td>
-                                <div class="flex items-center gap-5">
+                                <div class="flex items-center gap-3">
                                     <button @click="deleteCategory(category.id)"
                                         class="rounded-md bg-red-500 px-4 py-2 font-normal text-white hover:bg-red-600">
                                         Delete Category
                                     </button>
-                                    <button @click="editCategory(category.id)"
+                                    <button @click="editCategory(category)"
                                         class="rounded-md bg-green-500 px-4 py-2 font-normal text-white hover:bg-green-600">
                                         Edit Category
                                     </button>
