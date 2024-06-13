@@ -104,20 +104,12 @@ export default {
         <div class="relative" @click="toggleDropdown">
           <div class="flex items-center cursor-pointer">
             <div>Taufik00</div>
-            <img
-              src="https://source.unsplash.com/random/?person"
-              class="object-cover ml-2 rounded-full size-8"
-              alt="Profile"
-            />
+            <img src="https://source.unsplash.com/random/?person" class="object-cover ml-2 rounded-full size-8"
+              alt="Profile" />
           </div>
-          <div
-            v-if="showDropdown"
-            class="absolute right-0 z-10 w-48 mt-2 bg-white rounded-md shadow-lg"
-          >
-            <button
-              @click="logout"
-              class="block w-full px-4 py-2 text-sm font-medium text-left text-blue-500 rounded-md hover:bg-gray-50"
-            >
+          <div v-if="showDropdown" class="absolute right-0 z-10 w-48 mt-2 bg-white rounded-md shadow-lg">
+            <button @click="logout"
+              class="block w-full px-4 py-2 text-sm font-medium text-left text-blue-500 rounded-md hover:bg-gray-50">
               Logout
             </button>
           </div>
@@ -128,21 +120,14 @@ export default {
       <div class="flex items-center justify-end gap-3 pt-10 px-36">
         <AddCategory @categoryAdded="categoryAdded" />
         <AddProduct @productAdded="productAdded" />
-        <button
-          class="px-4 py-2 text-sm font-semibold text-blue-100 bg-blue-500 rounded hover:bg-blue-600"
-          @click="$router.push('/checkout')"
-        >
+        <button class="px-4 py-2 text-sm font-semibold text-blue-100 bg-blue-500 rounded hover:bg-blue-600"
+          @click="$router.push('/checkout')">
           Cart
         </button>
       </div>
 
       <div class="flex flex-wrap my-4 mx-36">
-        <button class="px-4 py-1 font-medium text-blue-500 border-b-2 border-blue-500">Semua</button>
-        <button
-          v-for="category in categories"
-          :key="category.id"
-          class="px-4 py-1 font-medium border-b-2"
-        >
+        <button v-for="category in categories" :key="category.id" class="px-4 py-1 font-medium border-b-2">
           {{ category.name }}
         </button>
         <div class="flex-1 border-b-2"></div>
@@ -150,27 +135,18 @@ export default {
       <div class="max-w-2xl px-4 py-6 mx-auto sm:px-6 sm:py-10 lg:max-w-7xl lg:px-8">
         <div class="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-5 xl:gap-x-8">
           <div v-for="post in posts" :key="post.id" class="overflow-hidden rounded-lg shadow">
-            <img
-              :src="post.picture_url"
-              class="aspect-[200/165] object-cover"
-              @click="detailsProduct(post.id)"
-            />
+            <img :src="post.picture_url" class="aspect-[200/165] object-cover" @click="detailsProduct(post.id)" />
             <div class="p-3">
               <div class="flex items-center justify-between">
                 <div class="text-sm font-medium">{{ post.name }}</div>
-                <button
-                  @click="deleteProduct(post.id)"
-                  class="px-2 py-1 text-xs text-white bg-red-600 rounded"
-                >
+                <button @click="deleteProduct(post.id)" class="px-2 py-1 text-xs text-white bg-red-600 rounded">
                   Delete
                 </button>
               </div>
               <div class="text-sm font-bold">Rp.{{ post.price.toLocaleString() }}</div>
               <div class="flex justify-center mt-5">
-                <button
-                  @click="addToCart(post)"
-                  class="w-full px-4 py-2 text-sm text-white bg-blue-500 rounded hover:bg-blue-600 sm:max-w-32"
-                >
+                <button @click="addToCart(post)"
+                  class="w-full px-4 py-2 text-sm text-white bg-blue-500 rounded hover:bg-blue-600 sm:max-w-32">
                   + Add to Cart
                 </button>
               </div>
@@ -178,10 +154,8 @@ export default {
           </div>
         </div>
         <div class="flex justify-end mt-10">
-          <button
-            class="px-4 py-2 font-medium text-white bg-blue-500 rounded hover:bg-blue-600"
-            @click="$router.push('/checkout')"
-          >
+          <button class="px-4 py-2 font-medium text-white bg-blue-500 rounded hover:bg-blue-600"
+            @click="$router.push('/checkout')">
             Total Bill : Rp.{{ totalBill.toLocaleString() }}
           </button>
         </div>
