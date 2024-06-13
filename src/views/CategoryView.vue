@@ -1,13 +1,13 @@
 <script>
-export default {
-    data() {
-        method: {
-            await fetchCategories() {
+// export default {
+//     data() {
+//         method: {
+//             await fetchCategories() {
 
-            }
-        }
-    }
-}
+//             }
+//         }
+//     }
+// }
 </script>
 <template>
     <div class="flex min-h-screen flex-col">
