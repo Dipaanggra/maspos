@@ -110,7 +110,7 @@ onMounted(() => {
                                 </div>
                             </td>
                             <td class="p-2 font-bold">Rp. {{ (item.price * item.quantity).toLocaleString() }}</td>
-                            <td class="p-2 justify-evenly flex">
+                            <td>
                                 <button @click="removeItem(item.id)"
                                     class="rounded bg-red-500 px-2 py-2 hover:bg-red-600 font-normal text-white">Remove
                                     Item</button>

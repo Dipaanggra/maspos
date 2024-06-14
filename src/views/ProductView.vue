@@ -104,7 +104,7 @@ export default {
         <div class="relative" @click="toggleDropdown">
           <div class="flex items-center cursor-pointer">
             <div>Taufik00</div>
-            <img src="https://source.unsplash.com/random/?person" class="object-cover ml-2 rounded-full size-8"
+            <img src="https://unsplash.com/@random/collections" class="object-cover ml-2 rounded-full size-8"
               alt="Profile" />
           </div>
           <div v-if="showDropdown" class="absolute right-0 z-10 w-48 mt-2 bg-white rounded-md shadow-lg">
