@@ -99,7 +99,7 @@ export default {
 <template>
   <div class="bg-white">
     <nav class="relative flex justify-between p-5 text-white bg-yellow-500 px-36">
-      <h1 class="font-bold text-l">MASPOS</h1>
+      <img src="/public/e-shop.png" class="items-start h-8" alt="">
       <div class="relative flex items-center justify-end gap-2">
         <div class="relative" @click="toggleDropdown">
           <div class="flex items-center cursor-pointer">

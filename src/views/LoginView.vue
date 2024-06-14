@@ -23,16 +23,20 @@ const submit = async () => {
 
 <template>
     <div>
-        <div class="flex justify-between bg-yellow-500 p-7 px-36 text-white">
-            <h1 class="text-l font-bold">MASPOS</h1>
-            <div class="items-center justify-end">
-                <div class="text-sm">Call Us +62 817-1902-092</div>
+        <nav class="relative flex justify-between p-5 text-white bg-yellow-500 px-36">
+            <img src="/public/e-shop.png" class="items-start h-8" alt="">
+            <div class="relative flex items-center justify-end gap-2">
+                <div class="relative" @click="toggleDropdown">
+                    <div class="flex items-center cursor-pointer">
+                        <div>Call Us +62 817-1902-092</div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </nav>
         <div class="flex min-h-full flex-col justify-center px-6 py-8 lg:px-8">
             <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-                <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                    Sign in to your account
+                <h2 class="mt-8 text-center text-2xl font-bold leading-6 tracking-tight text-gray-900">
+                    Login
                 </h2>
             </div>
             <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">

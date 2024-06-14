@@ -51,19 +51,21 @@ onMounted(() => {
 
 <template>
     <div class="flex min-h-screen flex-col">
-        <nav class="flex justify-between bg-yellow-500 p-5 px-36 text-white relative">
-            <h1 class="text-l font-bold">MASPOS</h1>
-            <div class="flex items-center justify-end gap-2 relative">
-                <div @click="toggleDropdown" class="cursor-pointer flex items-center gap-2">
-                    <div>Taufik00</div>
-                    <img src="https://source.unsplash.com/random/?person" class="size-8 rounded-full object-cover"
-                        alt="Profile" />
-                </div>
-                <div v-if="showDropdown" class="absolute right-0 mt-12 w-48 bg-white rounded-md shadow-lg z-10">
-                    <button @click="logout"
-                        class="block w-full text-left px-4 py-2 rounded-md text-sm text-yellow-500 font-medium hover:bg-gray-50">
-                        Logout
-                    </button>
+        <nav class="relative flex justify-between p-5 text-white bg-yellow-500 px-36">
+            <img src="/public/e-shop.png" class="items-start h-8" alt="">
+            <div class="relative flex items-center justify-end gap-2">
+                <div class="relative" @click="toggleDropdown">
+                    <div class="flex items-center cursor-pointer">
+                        <div>Taufik00</div>
+                        <img src="https://unsplash.com/@random/collections"
+                            class="object-cover ml-2 rounded-full size-8" alt="Profile" />
+                    </div>
+                    <div v-if="showDropdown" class="absolute right-0 z-10 w-48 mt-2 bg-white rounded-md shadow-lg">
+                        <button @click="logout"
+                            class="block w-full px-4 py-2 text-sm font-medium text-left text-yellow-500 rounded-md hover:bg-gray-50">
+                            Logout
+                        </button>
+                    </div>
                 </div>
             </div>
         </nav>
