@@ -67,7 +67,7 @@ export default {
 
 <template>
   <div class="flex min-h-screen flex-col">
-    <nav class="flex justify-between bg-blue-600 p-5 px-36 text-white relative">
+    <nav class="flex justify-between bg-yellow-500 p-5 px-36 text-white relative">
       <h1 class="text-l font-bold">MASPOS</h1>
       <div class="flex items-center justify-end gap-2 relative">
         <div @click="toggleDropdown" class="cursor-pointer flex items-center gap-2">
@@ -77,7 +77,7 @@ export default {
         </div>
         <div v-if="showDropdown" class="absolute right-0 mt-12 w-48 bg-white rounded-md shadow-lg z-10">
           <button @click="logout"
-            class="block w-full text-left px-4 py-2 rounded-md text-sm text-blue-500 font-medium hover:bg-gray-50">
+            class="block w-full text-left px-4 py-2 rounded-md text-sm text-yellow-500 font-medium hover:bg-gray-50">
             Logout
           </button>
         </div>
@@ -106,7 +106,7 @@ export default {
                     Delete Category
                   </button>
                   <button @click="editCategory(category)"
-                    class="rounded-md bg-green-500 px-4 py-2 font-normal text-white hover:bg-green-600">
+                    class="rounded-md bg-yellow-500 px-4 py-2 font-normal text-white hover:bg-yellow-600">
                     Edit Category
                   </button>
                 </div>

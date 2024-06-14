@@ -42,10 +42,8 @@ export default {
 </script>
 <style></style>
 <template>
-  <button
-    @click="setIsOpen(true)"
-    class="px-4 py-2 text-sm font-semibold text-blue-800 bg-blue-200 rounded hover:bg-blue-300"
-  >
+  <button @click="setIsOpen(true)"
+    class="px-4 py-2 text-sm font-semibold text-yellow-800 bg-yellow-200 rounded hover:bg-yellow-300">
     + Add Category
   </button>
   <Dialog :open="isOpen" @close="setIsOpen" class="relative z-50">
@@ -59,18 +57,9 @@ export default {
         <DialogTitle class="flex justify-between p-4 border-b">
           <div class="text-xl font-bold">Add Category</div>
           <button @click="setIsOpen(false)">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-x"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-x">
               <path d="M18 6 6 18" />
               <path d="m6 6 12 12" />
             </svg>
@@ -84,8 +73,8 @@ export default {
             </div>
           </div>
           <div class="flex justify-end gap-2 p-4">
-            <button class="px-4 py-2 bg-blue-300 rounded">Cancel</button>
-            <button type="submit" class="px-4 py-2 bg-blue-300 rounded">Submit</button>
+            <button class="px-4 py-2 bg-yellow-300 rounded">Cancel</button>
+            <button type="submit" class="px-4 py-2 bg-yellow-300 rounded">Submit</button>
           </div>
         </form>
 

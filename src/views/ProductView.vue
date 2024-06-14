@@ -98,7 +98,7 @@ export default {
 
 <template>
   <div class="bg-white">
-    <nav class="relative flex justify-between p-5 text-white bg-blue-600 px-36">
+    <nav class="relative flex justify-between p-5 text-white bg-yellow-500 px-36">
       <h1 class="font-bold text-l">MASPOS</h1>
       <div class="relative flex items-center justify-end gap-2">
         <div class="relative" @click="toggleDropdown">
@@ -109,7 +109,7 @@ export default {
           </div>
           <div v-if="showDropdown" class="absolute right-0 z-10 w-48 mt-2 bg-white rounded-md shadow-lg">
             <button @click="logout"
-              class="block w-full px-4 py-2 text-sm font-medium text-left text-blue-500 rounded-md hover:bg-gray-50">
+              class="block w-full px-4 py-2 text-sm font-medium text-left text-yellow-500 rounded-md hover:bg-gray-50">
               Logout
             </button>
           </div>
@@ -120,7 +120,7 @@ export default {
       <div class="flex items-center justify-end gap-3 pt-10 px-36">
         <AddCategory @categoryAdded="categoryAdded" />
         <AddProduct @productAdded="productAdded" />
-        <button class="px-4 py-2 text-sm font-semibold text-blue-100 bg-blue-500 rounded hover:bg-blue-600"
+        <button class="px-4 py-2 text-sm font-semibold text-yellow-100 bg-yellow-400 rounded hover:bg-yellow-500"
           @click="$router.push('/checkout')">
           Cart
         </button>
@@ -139,14 +139,14 @@ export default {
             <div class="p-3">
               <div class="flex items-center justify-between">
                 <div class="text-sm font-medium">{{ post.name }}</div>
-                <button @click="deleteProduct(post.id)" class="px-2 py-1 text-xs text-white bg-red-600 rounded">
+                <button @click="deleteProduct(post.id)" class="px-2 py-1 text-xs text-white bg-red-500 rounded">
                   Delete
                 </button>
               </div>
               <div class="text-sm font-bold">Rp.{{ post.price.toLocaleString() }}</div>
               <div class="flex justify-center mt-5">
                 <button @click="addToCart(post)"
-                  class="w-full px-4 py-2 text-sm text-white bg-blue-500 rounded hover:bg-blue-600 sm:max-w-32">
+                  class="w-full px-4 py-2 text-sm text-white bg-yellow-400 rounded hover:bg-yellow-500 sm:max-w-32">
                   + Add to Cart
                 </button>
               </div>
@@ -154,7 +154,7 @@ export default {
           </div>
         </div>
         <div class="flex justify-end mt-10">
-          <button class="px-4 py-2 font-medium text-white bg-blue-500 rounded hover:bg-blue-600"
+          <button class="px-4 py-2 font-medium text-white bg-yellow-400 rounded hover:bg-yellow-500"
             @click="$router.push('/checkout')">
             Total Bill : Rp.{{ totalBill.toLocaleString() }}
           </button>

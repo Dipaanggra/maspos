@@ -19,7 +19,7 @@ export default {
         setIsOpen(value) {
             this.isOpen = value
         },
-        async addCategory() {
+        async editCategory() {
             const formData = new FormData()
             formData.append('name', this.categoryName)
 
@@ -44,7 +44,7 @@ export default {
 <template>
     <button @click="setIsOpen(true)"
         class="px-4 py-2 text-sm font-semibold text-blue-800 bg-blue-200 rounded hover:bg-blue-300">
-        + Add Category
+        Edit Category
     </button>
     <Dialog :open="isOpen" @close="setIsOpen" class="relative z-50">
         <!-- The backdrop, rendered as a fixed sibling to the panel container -->
@@ -55,7 +55,7 @@ export default {
             <!-- The actual dialog panel -->
             <DialogPanel class="w-full max-w-xl bg-white rounded">
                 <DialogTitle class="flex justify-between p-4 border-b">
-                    <div class="text-xl font-bold">Add Category</div>
+                    <div class="text-xl font-bold">Edit Category</div>
                     <button @click="setIsOpen(false)">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -65,7 +65,7 @@ export default {
                         </svg>
                     </button>
                 </DialogTitle>
-                <form v-on:submit.prevent="addCategory">
+                <form v-on:submit.prevent="editCategory">
                     <div class="grid gap-3 p-4 md:grid-cols-2">
                         <div class="">
                             <label for="name">Name</label>
@@ -78,7 +78,6 @@ export default {
                     </div>
                 </form>
 
-                <!-- ... -->
             </DialogPanel>
         </div>
     </Dialog>

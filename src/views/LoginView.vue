@@ -23,7 +23,7 @@ const submit = async () => {
 
 <template>
     <div>
-        <div class="flex justify-between bg-blue-600 p-7 px-36 text-white">
+        <div class="flex justify-between bg-yellow-500 p-7 px-36 text-white">
             <h1 class="text-l font-bold">MASPOS</h1>
             <div class="items-center justify-end">
                 <div class="text-sm">Call Us +62 817-1902-092</div>
@@ -43,7 +43,7 @@ const submit = async () => {
                         <div class="mt-2">
                             <input v-model="form.email" id="email" name="email" type="email" autocomplete="email"
                                 required
-                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-500 sm:text-sm sm:leading-6">
                         </div>
                     </div>
                     <div>
@@ -54,12 +54,12 @@ const submit = async () => {
                         <div class="mt-2">
                             <input v-model="form.password" id="password" name="password" type="password"
                                 autocomplete="current-password" required
-                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-500 sm:text-sm sm:leading-6">
                         </div>
                     </div>
                     <div>
                         <button type="submit"
-                            class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                            class="flex w-full justify-center rounded-md bg-yellow-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-500">
                             Sign in
                         </button>
                     </div>
