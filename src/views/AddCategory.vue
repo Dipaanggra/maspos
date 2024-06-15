@@ -40,7 +40,6 @@ export default {
   }
 }
 </script>
-<style></style>
 <template>
   <button @click="setIsOpen(true)"
     class="px-4 py-2 text-sm font-semibold text-yellow-800 bg-yellow-200 rounded hover:bg-yellow-300">

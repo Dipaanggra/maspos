@@ -51,24 +51,26 @@ onMounted(() => {
 
 <template>
     <div class="flex min-h-screen flex-col">
-        <nav class="relative flex justify-between p-5 text-white bg-yellow-500 px-36">
-            <img src="/public/e-shop.png" class="items-start h-8" alt="">
-            <div class="relative flex items-center justify-end gap-2">
-                <div class="relative" @click="toggleDropdown">
-                    <div class="flex items-center cursor-pointer">
-                        <div>Taufik00</div>
-                        <img src="https://unsplash.com/@random/collections"
-                            class="object-cover ml-2 rounded-full size-8" alt="Profile" />
-                    </div>
-                    <div v-if="showDropdown" class="absolute right-0 z-10 w-48 mt-2 bg-white rounded-md shadow-lg">
-                        <button @click="logout"
-                            class="block w-full px-4 py-2 text-sm font-medium text-left text-yellow-500 rounded-md hover:bg-gray-50">
-                            Logout
-                        </button>
+        <div class="sticky top-0">
+            <nav class="relative flex justify-between p-5 text-white bg-yellow-500 px-36">
+                <img src="/public/e-shop.png" class="items-start h-8" alt="">
+                <div class="relative flex items-center justify-end gap-2">
+                    <div class="relative" @click="toggleDropdown">
+                        <div class="flex items-center cursor-pointer">
+                            <div>Taufik00</div>
+                            <img src="https://unsplash.com/@random/collections"
+                                class="object-cover ml-2 rounded-full size-8" alt="Profile" />
+                        </div>
+                        <div v-if="showDropdown" class="absolute right-0 z-10 w-48 mt-2 bg-white rounded-md shadow-lg">
+                            <button @click="logout"
+                                class="block w-full px-4 py-2 text-sm font-medium text-left text-yellow-500 rounded-md hover:bg-gray-50">
+                                Logout
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </div>
         <div class="bg-white p-10 px-36">
             <div class="overflow-x-auto">
                 <table class="min-w-full">
@@ -86,7 +88,8 @@ onMounted(() => {
                                 <img :src="item.picture_url" class="mr-4 h-28 w-28 rounded-lg object-cover" />
                                 <div>
                                     <div class="font-bold">{{ item.name }}</div>
-                                    <div class="mr-6 font-bold text-black">Rp. {{ item.price.toLocaleString() }}</div>
+                                    <div class="mr-6 font-bold text-black">Rp. {{ item.price.toLocaleString() }}
+                                    </div>
                                 </div>
                             </td>
                             <td>
@@ -127,7 +130,9 @@ onMounted(() => {
                     </tfoot>
                 </table>
             </div>
-            <div class="mt-6 flex justify-end gap-4">
+        </div>
+        <div class="sticky bottom-0 px-36 bg-white py-4">
+            <div class="flex justify-end gap-4">
                 <button @click="backToHome"
                     class="rounded border-2 border-yellow-500 px-4 py-2 font-semibold text-yellow-600">Back to
                     Home</button>

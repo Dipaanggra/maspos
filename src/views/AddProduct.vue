@@ -1,4 +1,5 @@
 <script setup>
+import { useCategoryStore } from '@/stores/categoryStore';
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 </script>
 <script>
@@ -16,24 +17,13 @@ export default {
       price: '',
       category: '',
       image: null,
-      categories: null,
+      categoryStore: useCategoryStore(),
       url: ''
     }
-  },
-  async mounted() {
-    this.categories = await this.fetchCategories()
   },
   methods: {
     setIsOpen(value) {
       this.isOpen = value
-    },
-    async fetchCategories() {
-      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/category`, {
-        headers: {
-          Authorization: localStorage.getItem('auth')
-        }
-      })
-      return response.data.data
     },
     async addProduct() {
       const formData = new FormData()
@@ -116,7 +106,7 @@ export default {
               <div class="">
                 <label for="name">Category</label>
                 <select v-model="category" name="" class="block w-full" id="">
-                  <option :value="category.id" v-for="category in categories" :key="category.id">
+                  <option :value="category.id" v-for="category in categoryStore.categories" :key="category.id">
                     {{ category.name }}
                   </option>
                 </select>
@@ -124,7 +114,7 @@ export default {
             </div>
           </div>
           <div class="flex justify-end gap-2 p-4">
-            <button class="px-4 py-2 bg-yellow-300 rounded">Cancel</button>
+            <button @click="setIsOpen(false)" class="px-4 py-2 bg-yellow-300 rounded">Cancel</button>
             <input type="submit" class="px-4 py-2 bg-yellow-300 rounded" value="Submit" />
           </div>
         </form>
