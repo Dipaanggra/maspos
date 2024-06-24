@@ -1,33 +1,34 @@
 <script>
-import AddProduct from '../AddProduct.vue'
+import AddProduct from './AddProduct.vue'
 import { cartStore } from '@/stores/cartStore'
 import { useProductStore } from '@/stores/productStore'
 import AddCategory from '../AddCategory.vue'
 import ProductCard from './ProductCard.vue'
 import { useCategoryStore } from '@/stores/categoryStore'
 import ProductDetail from './ProductDetail.vue'
+import FilterProduct from '@/components/FilterProduct.vue'
 
 export default {
   components: {
     ProductDetail,
     AddProduct,
     AddCategory,
-    ProductCard
+    ProductCard,
+    FilterProduct
   },
   data() {
     return {
       productStore: useProductStore(),
       categoryStore: useCategoryStore(),
       detailProduct: false,
-      showDropdown: false
+      showDropdown: false,
     }
   },
   async mounted() {
-    this.productStore.fetchProducts()
-    this.categoryStore.fetchCategories()
+    await this.productStore.fetchProducts()
+    await this.categoryStore.fetchCategories()
   },
   methods: {
-
     async deleteProduct(productId) {
       this.productStore.deleteProduct(productId)
     },
@@ -40,10 +41,10 @@ export default {
       this.selectedProduct = null
     },
     async productAdded() {
-      this.productStore.fetchProducts()
+      await this.productStore.fetchProducts()
     },
     async categoryAdded() {
-      this.categoryStore.fetchCategories()
+      await this.categoryStore.fetchCategories()
     },
     addToCart(product) {
       cartStore.addItem(product)
@@ -66,7 +67,6 @@ export default {
   }
 }
 </script>
-
 <template>
   <div class="bg-white">
     <div class="sticky top-0 bg-white">
@@ -95,19 +95,12 @@ export default {
           Cart
         </button>
       </div>
-      <div class="flex flex-wrap my-4 mx-36">
-        <button v-for="category in categoryStore.categories" :key="category.id"
-          class="px-4 py-1 font-medium border-b-2">
-          {{ category.name }}
-        </button>
-        <div class="flex-1 border-b-2"></div>
-      </div>
+      <FilterProduct :categories="categoryStore.categories" @filter="productStore.filterProducts" />
     </div>
     <main>
-
       <div class="max-w-2xl px-4 py-6 mx-auto sm:px-6 sm:py-10 lg:max-w-7xl lg:px-8">
         <div class="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-5 xl:gap-x-8">
-          <ProductCard v-for="post in productStore.posts" @addToCart="addToCart" :key="post.id" :post="post"
+          <ProductCard v-for="post in productStore.filteredProducts" @addToCart="addToCart" :key="post.id" :post="post"
             @deleteProduct="deleteProduct" @detailProducts="showDetailProduct" />
         </div>
       </div>

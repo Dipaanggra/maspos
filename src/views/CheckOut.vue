@@ -122,8 +122,8 @@ onMounted(() => {
                             </td>
                         </tr>
                     </tbody>
-                    <tfoot>
-                        <tr class="justify-between flex">
+                    <tfoot class="px-10">
+                        <tr class="justify-between flex ">
                             <td class="p-2 text-right font-bold" colspan="2">Total</td>
                             <td class="p-2 font-bold">Rp. {{ cartStore.totalBill.toLocaleString() }}</td>
                         </tr>
