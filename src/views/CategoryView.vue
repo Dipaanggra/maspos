@@ -109,10 +109,6 @@ export default {
                     class="rounded-md bg-red-500 px-4 py-2 font-normal text-white hover:bg-red-600">
                     Delete Category
                   </button>
-                  <button @click="editCategory(category)"
-                    class="rounded-md bg-yellow-500 px-4 py-2 font-normal text-white hover:bg-yellow-600">
-                    Edit Category
-                  </button>
                 </div>
               </td>
             </tr>
