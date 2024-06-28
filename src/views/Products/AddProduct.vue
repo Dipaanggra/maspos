@@ -73,7 +73,7 @@ export default {
       <!-- The actual dialog panel -->
       <DialogPanel class="w-full max-w-xl bg-white rounded">
         <DialogTitle class="flex justify-between p-4 border-b">
-          <div class="text-xl font-bold">Complete your order</div>
+          <div class="text-xl font-bold">Add Product</div>
           <button @click="setIsOpen(false)">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -96,16 +96,16 @@ export default {
             </div>
             <div class="">
               <div class="">
-                <label for="name">Name</label>
-                <input v-model="productName" type="text" class="w-full" />
+                <label for="name" class="">Name</label>
+                <input v-model="productName" type="text" class="w-full rounded-md" />
               </div>
               <div class="">
-                <label for="name">Price</label>
-                <input v-model="price" type="number" class="w-full" />
+                <label for="name" class="">Price</label>
+                <input v-model="price" type="number" class="w-full rounded-md" />
               </div>
               <div class="">
-                <label for="name">Category</label>
-                <select v-model="category" name="" class="block w-full" id="">
+                <label for="name" class="">Category</label>
+                <select v-model="category" name="" class="block w-full rounded-md" id="">
                   <option :value="category.id" v-for="category in categoryStore.categories" :key="category.id">
                     {{ category.name }}
                   </option>

@@ -68,7 +68,7 @@ export default {
           <div class="grid gap-3 p-4 md:grid-cols-2">
             <div class="">
               <label for="name">Name</label>
-              <input v-model="categoryName" type="text" class="w-full" />
+              <input v-model="categoryName" type="text" class="w-full rounded-md" />
             </div>
           </div>
           <div class="flex justify-end gap-2 p-4">

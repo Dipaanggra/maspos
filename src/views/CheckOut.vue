@@ -58,8 +58,8 @@ onMounted(() => {
                     <div class="relative" @click="toggleDropdown">
                         <div class="flex items-center cursor-pointer">
                             <div>Taufik00</div>
-                            <img src="https://unsplash.com/@random/collections"
-                                class="object-cover ml-2 rounded-full size-8" alt="Profile" />
+                            <img src="https://i.pravatar.cc/300" class="object-cover ml-2 rounded-full size-8"
+                                alt="Profile" />
                         </div>
                         <div v-if="showDropdown" class="absolute right-0 z-10 w-48 mt-2 bg-white rounded-md shadow-lg">
                             <button @click="logout"
