@@ -114,3 +114,49 @@ export default {
     <ProductDetail :isOpen="detailProduct" :product="productStore.post" @update:isOpen="detailProduct = $event" />
   </div>
 </template>
+
+
+<!-- nomer 1.
+a. Waterfall: 
+Pendekatan linier dan berurutan di mana 
+setiap fase harus diselesaikan sebelum fase berikutnya.
+ 
+b. Agile: 
+Pendekatan iteratif dan inkremental yang memprioritaskan 
+kolaborasi, fleksibilitas, dan respons cepat terhadap 
+perubahan.
+
+c. Scrum: 
+Kerangka kerja Agile yang berfokus pada iterasi pendek 
+yang disebut sprint, dengan pertemuan harian dan 
+retrospektif.
+
+nomer 2. 
+Struktur data yang digunakan adalah array. 
+Operasi-operasi dasar nya seperti mengakses, mengubah, 
+menambahkan, dan menghapus data.
+
+nomer 3. 
+Model-View-Controller (MVC) adalah pola desain 
+yang memisahkan logika aplikasi menjadi 
+tiga komponen utama: Model, View, dan Controller.
+
+a. Model
+Bagian yang bertugas untuk menyiapkan, mengatur, memanipulasi, dan mengorganisasikan data 
+yang ada di database.
+
+b. View
+Bagian yang bertugas untuk menampilkan informasi 
+dalam bentuk Graphical User Interface 
+(GUI).
+
+c. Controller
+Bagian yang bertugas untuk menghubungkan serta mengatur 
+model dan view agar dapat saling 
+terhubung.
+
+nomer 4.
+@foreach
+
+nomer 5.
+https://laravel.com/docs/11.x  -->

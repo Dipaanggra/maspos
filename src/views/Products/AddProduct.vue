@@ -96,17 +96,18 @@ export default {
             </div>
             <div class="">
               <div class="">
-                <label for="name" class="">Name</label>
+                <label for="name" class="font-semibold">Product Name</label>
                 <input v-model="productName" type="text" class="w-full rounded-md" />
               </div>
               <div class="">
-                <label for="name" class="">Price</label>
+                <label for="name" class="font-semibold">Product Price</label>
                 <input v-model="price" type="number" class="w-full rounded-md" />
               </div>
               <div class="">
-                <label for="name" class="">Category</label>
+                <label for="name" class="font-semibold">Product Category</label>
                 <select v-model="category" name="" class="block w-full rounded-md" id="">
-                  <option :value="category.id" v-for="category in categoryStore.categories" :key="category.id">
+                  <option :value="category.id" v-for="category in categoryStore.categories" :key="category.id"
+                    class="font-medium">
                     {{ category.name }}
                   </option>
                 </select>
@@ -114,12 +115,10 @@ export default {
             </div>
           </div>
           <div class="flex justify-end gap-2 p-4">
-            <button @click="setIsOpen(false)" class="px-4 py-2 bg-yellow-300 rounded">Cancel</button>
-            <input type="submit" class="px-4 py-2 bg-yellow-300 rounded" value="Submit" />
+            <button @click="setIsOpen(false)" class="px-4 py-2 bg-yellow-300 font-medium rounded">Cancel</button>
+            <input type="submit" class="px-4 py-2 bg-yellow-300 font-medium rounded" value="Submit" />
           </div>
         </form>
-
-        <!-- ... -->
       </DialogPanel>
     </div>
   </Dialog>
